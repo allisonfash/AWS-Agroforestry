@@ -1,10 +1,40 @@
-Line-by-Line Explanation and README.md Content
-First, let's break down the code into sections and provide explanations for each part.
 
-1. Importing Libraries
+### Setting Up the Environment
 
-python
-Copy code
+1. **Clone the Repository**:
+   - Open a terminal in Jupyter and run:
+     ```bash
+     git clone https://github.com/<your-github-username>/NASA_Agroforestry_Project.git
+     cd NASA_Agroforestry_Project
+     ```
+
+2. **Create the Conda Environment**:
+   - In the terminal, run:
+     ```bash
+     conda env create -f data/landsat4.yml
+     conda activate landsat4
+     ```
+
+3. **Launch Jupyter Notebook**:
+   - In the terminal, run:
+     ```bash
+     jupyter notebook
+     ```
+   - Open the `NASA_SERVIR.ipynb` notebook located in the `notebooks` directory.
+
+## Repository Structure
+
+- `/data`: Contains the configuration files and boundary data.
+- `/notebooks`: Contains the Jupyter notebook for the analysis.
+- `/scripts`: Contains the Python scripts for data processing and analysis.
+- `README.md`: Project overview and instructions.
+- `requirements.txt`: List of required Python packages.
+
+## Methods and Functions
+
+### Importing Libraries
+
+```python
 import os 
 import requests as rq
 import pandas as pd
@@ -26,19 +56,3 @@ import hvplot.pandas
 import numpy as np
 import boto3
 warnings.filterwarnings("ignore")
-Explanation: This block imports various libraries used in the project:
-
-os: Interacting with the operating system.
-requests: Making HTTP requests.
-pandas: Data manipulation and analysis.
-geopandas: Handling geospatial data.
-folium: Creating interactive maps.
-geojson: Working with GeoJSON data.
-warnings: Managing warnings.
-matplotlib.pyplot: Plotting data.
-rasterio: Reading and writing geospatial raster data.
-rioxarray: Working with raster data in an xarray format.
-shapely.geometry: Working with geometric objects.
-hvplot: High-level plotting.
-numpy: Numerical operations.
-boto3: AWS SDK for Python.
