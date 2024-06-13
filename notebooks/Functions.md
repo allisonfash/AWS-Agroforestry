@@ -146,7 +146,7 @@ def send_STAC_query(limit=20, collections=None, intersects=None, datetime=None, 
 
 ### Separate GEOJSON into Windows
 
-##### Function overview: 
+
 ```python
 def create_windows(aoi_gdf):
     # Define the window size (in degrees)
@@ -376,9 +376,8 @@ tuple(window)
 query_returns = send_STAC_query(limit=1000, collections='landsat-c2l2-sr', bbox=tuple(window), datetime=date_time)
 ```
 ### Setup Processing Functions
-##### Function overview: Purpose:
 
-To extract and return a list of URLs (links) for specific spectral bands from a provided query item.
+##### Function overview: To extract and return a list of URLs (links) for specific spectral bands from a provided query item.
 
 ```python
 def get_SR_band_links(query_item):
@@ -465,7 +464,6 @@ def retrieve_spectral_data(query_returns, window, aoi_gdf):
     return (row, col), spectral_arr, qa_arr
 ```
 
-##### Function overview: 
 
 ```python
 def filter_returns(query_returns):
@@ -494,7 +492,7 @@ def filter_returns(query_returns):
     #     print(query_item['properties']['proj:epsg'])
     return filtered_query_returns
 ```
-##### Function overview: This function creates a boolean mask based on the specified quality assessment (QA) type, where `True` indicates the presence of the specified condition.
+##### Function overview: creates a boolean mask based on the specified quality assessment (QA) type, where `True` indicates the presence of the specified condition.
 
 - **qa_rod**: The quality assessment array.
 - **mask_type**: The type of mask to create. Valid options are: "fill", "dilated", "cirrus", "cloud", "shadow", "snow", "clear", and "water".
@@ -595,7 +593,7 @@ def process_window(spectral_arr, qa_arr):
     return np.array(out_comp)
 ```
 ### Run Composite Processing
-##### Function overview: 
+
 
 ```python
 (height, width), spectral_arr, qa_arr  = retrieve_spectral_data(filter_returns(query_returns), window, aoi_gdf)
@@ -647,6 +645,11 @@ def reproject_window(window, aoi_gdf, dst_crs):
         right=window[2],
         top=window[3]
     )
+```
+
+```python
+ for q in query_returns:
+     print(q['properties']['proj:epsg'], q['properties']['proj:transform'], q['properties']['proj:shape'])
 ```
 
 
