@@ -31,6 +31,12 @@ Results (points with greenest pixels):
 <img width="423" alt="image" src="https://github.com/allisonfash/AWS-Agroforestry/assets/156024029/13bb4598-06d9-4f53-a4c4-cd209ef569d5">
 
 
+Sources: 
+
+Berner, L. T., Assmann, J. J., Normand, S., & Goetz, S. J. (2023). 'LandsatTS': An R package to facilitate retrieval, cleaning, cross-calibration, and phenological modeling of Landsat time series data. Ecography. https://doi.org/10.1111/ecog.06768
+
+
+DeMuth, J., Wells, L., & Boric, N. (2022, July 22). How to partition your geospatial data lake for analysis with Amazon Redshift. AWS Blog. https://aws.amazon.com/blogs/publicsector/how-to-partition-your-geospatial-data-lake-for-analysis-with-amazon-redshift/
 
 
 
