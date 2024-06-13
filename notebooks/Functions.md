@@ -1,5 +1,5 @@
 
-### Setting Up the Environment
+### Setting Up the Environment (Refer to "setting up enviroment.md for more detailed explanation):
 
 1. **Clone the Repository**:
    - Open a terminal in Jupyter and run:
