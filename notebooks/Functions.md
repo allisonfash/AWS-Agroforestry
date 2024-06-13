@@ -52,7 +52,7 @@
 - **numpy**: Numerical operations.
 - **boto3**: AWS SDK for Python.
 
-#### After creating your enviroment with the landsat4.yml set your kernel to your new enviroment and start your script in this order
+##### After creating your enviroment with the landsat4.yml set your kernel to your new enviroment and start your script in this order
 ```python
 import os
 import pyproj
@@ -83,7 +83,7 @@ import boto3
 warnings.filterwarnings("ignore")
 ```
 
-#### Next step reads a GeoJSON file containing the boundary of the area of interest (AOI) using GeoPandas and converts it into a GeoJSON format.
+##### Next step reads a GeoJSON file containing the boundary of the area of interest (AOI) using GeoPandas and converts it into a GeoJSON format. If there are troubles with this step try copying the path directly from Sagemaker.
 ```python
 #This code will allow you to open and read the geojson data we uploaded into sagemaker
 aoi_gdf =  gpd.read_file(os.path.join('ucayali_boundary.geojson')) # aoi geopandas dataframe
@@ -397,10 +397,6 @@ def get_QA_band_link(query_item):
 ```
 ##### Explanation: This function reprojects the bounding coordinates of a sub-window from the source CRS (Coordinate Reference System) of the AOI (area of interest) to the destination CRS.
 
-window: The bounding coordinates of the sub-window.
-aoi_gdf: The GeoDataFrame representing the area of interest.
-dst_crs: The destination CRS to which the window bounds should be reprojected.
-
 ```python
 def reproject_window(window, aoi_gdf, dst_crs):
     # dst_crs = 'EPSG:32619'  # UTM Zone 19N
@@ -468,74 +464,8 @@ def retrieve_spectral_data(query_returns, window, aoi_gdf):
         
     return (row, col), spectral_arr, qa_arr
 ```
-```python
-def reproject_window(window, aoi_gdf, dst_crs):
-    # dst_crs = 'EPSG:32619'  # UTM Zone 19N
-    # Reproject the first intersecting sub-window to the CRS of the TIFF file
-    return  rio.warp.transform_bounds(
-        src_crs=aoi_gdf.crs,
-        dst_crs=dst_crs,
-        left=window[0],
-        bottom=window[1],
-        right=window[2],
-        top=window[3]
-    )
 
-
-def retrieve_cog(geotiff_path, window, aoi_gdf):
-    """
-    Retrieve a Cloud-Optimized GeoTIFF (COG) within a specified bounding box.
-
-    Parameters:
-        - geotiff_path (str): Path to the COG GeoTIFF file.
-        - aoi_gdf (geopandas.GeoDataFrame): GeoDataFrame representing the area of interest.
-
-    Returns:
-        - cog (numpy.ndarray): Numpy array containing the data within the specified bounding box.
-    """
-    aws_session = AWSSession(boto3.Session(), requester_pays=True)
-    with rio.Env(aws_session):
-        with rio.open(geotiff_path) as tif:
-            # Reproject the GeoTIFF to EPSG:32619
-            # dst_crs = 'EPSG:32619'  # UTM Zone 19N
-            dst_crs = tif.crs
-            window = reproject_window(window, aoi_gdf, dst_crs)
-            
-            if tif.crs == dst_crs:
-                # print(window)
-                cog = tif.read(1, window=from_bounds(
-                    window[0],
-                    window[1],
-                    window[2],
-                    window[3],
-                    tif.transform), boundless=True, fill_value=0)
-                cog = np.array(cog)
-            else:  
-                cog = reproject_and_clip_tif(geotiff_path, window, dst_crs='EPSG:32619')
-
-    return cog
-
-
-def retrieve_spectral_data(query_returns, window, aoi_gdf):
-    cog = (retrieve_cog(get_SR_band_links(query_returns[0])[0], window, aoi_gdf))
-    row, col = cog.shape
-    spectral_arr = np.zeros(shape=(6, len(query_returns), row, col), dtype=int)
-    qa_arr = np.zeros(shape=(len(query_returns), row, col), dtype=int)
-
-    for idx1, query_item in enumerate(query_returns):
-        print(f" Pulling: {idx1} {query_item['id']}")
-        band_links = get_SR_band_links(query_item)
-
-        qa_link = get_QA_band_link(query_item)
-
-        for idx2, b in enumerate(band_links):
-            spectral_arr[idx2, idx1] = retrieve_cog(b,  window, aoi_gdf)
-
-        qa_arr[idx1] = retrieve_cog(qa_link,  window, aoi_gdf)
-        
-    return (row, col), spectral_arr, qa_arr
-```
-##### Function overview: This function reprojects the bounding coordinates of a sub-window from the source CRS (Coordinate Reference System) of the AOI (area of interest) to the destination CRS.
+##### Function overview: 
 
 ```python
 def filter_returns(query_returns):
@@ -564,12 +494,12 @@ def filter_returns(query_returns):
     #     print(query_item['properties']['proj:epsg'])
     return filtered_query_returns
 ```
-##### Function overview: This function creates a boolean mask based on the specified quality assessment (QA) type, where True indicates the presence of the specified condition.
+##### Function overview: This function creates a boolean mask based on the specified quality assessment (QA) type, where `True` indicates the presence of the specified condition.
 
-qa_rod: The quality assessment array.
-mask_type: The type of mask to create. Valid options are: "fill", "dilated", "cirrus", "cloud", "shadow", "snow", "clear", and "water".
-masks: Dictionary mapping mask types to their corresponding bit positions.
-bit: The bit position corresponding to the specified mask type.
+- **qa_rod**: The quality assessment array.
+- **mask_type**: The type of mask to create. Valid options are: "fill", "dilated", "cirrus", "cloud", "shadow", "snow", "clear", and "water".
+- **masks**: Dictionary mapping mask types to their corresponding bit positions.
+- **bit**: The bit position corresponding to the specified mask type.
 
 ```python
 def qa_mask(qa_rod, mask_type):
@@ -665,6 +595,8 @@ def process_window(spectral_arr, qa_arr):
     return np.array(out_comp)
 ```
 ### Run Composite Processing
+##### Function overview: 
+
 ```python
 (height, width), spectral_arr, qa_arr  = retrieve_spectral_data(filter_returns(query_returns), window, aoi_gdf)
 ```
@@ -677,7 +609,7 @@ out_arr.shape
 
 ### Save Raster
 
-##### Function overview: reprojects the bounding coordinates of a sub-window from the source CRS (Coordinate Reference System) of the AOI (area of interest) to the destination CRS.
+##### Function overview: 
 
 ```python
 def get_geometry(query_returns, window, aoi_gdf):
