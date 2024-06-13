@@ -40,7 +40,7 @@ This repository contains the code to process Landsat data and generate a greenes
 ##Setup Enviroment
 
 1. Open a terminal from your Sagemaker instance:
-2. 
+2. Use ls to find your directory
 
 3. Create the conda environment:
     ```bash
