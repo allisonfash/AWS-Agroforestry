@@ -9,21 +9,46 @@ This repository contains the code to process Landsat data and generate a greenes
 - `src`: Source code for various processing steps.
 - `notebooks`: Jupyter notebook for interactive processing.
 
-## Setup
 
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/landsat-greenest-pixel.git
-    cd landsat-greenest-pixel
-    ```
+## Setup Instructions
 
-2. Create the conda environment:
+### Prerequisites
+
+1. **AWS Account**: Ensure you have an active AWS account.
+2. **IAM Role**: Create an IAM role with the necessary permissions for SageMaker, S3, and other AWS services you will use.
+3. **S3 Bucket**: Create an S3 bucket to store your data and notebook files.
+
+### Steps to Set Up an Amazon SageMaker Notebook Instance
+
+1. **Open the Amazon SageMaker Console**:
+   - Go to the [Amazon SageMaker Console](https://console.aws.amazon.com/sagemaker/).
+
+2. **Create a Notebook Instance**:
+   - Click on **Notebook instances** in the left sidebar.
+   - Click on the **Create notebook instance** button.
+
+3. **Configure the Notebook Instance**:
+   - **Notebook instance name**: `NASA-Agroforestry-Instance`
+   - **Instance type**: `ml.t3.2xlarge` (or any other extra-large instance type as needed)
+   - **IAM role**: Select an existing role or create a new role with the necessary permissions.
+
+4. **Add a Git Repository**:
+   - Under the **Git repositories** section, add your GitHub repository for this project.
+   - Repository URL: `https://github.com/<your-github-username>/NASA_Agroforestry_Project.git`
+
+
+##Setup Enviroment
+
+1. Open a terminal from your Sagemaker instance:
+2. 
+
+3. Create the conda environment:
     ```bash
     conda env create -f environment.yml
     conda activate landsat4
     ```
 
-3. Run the main script:
+4. Run the main script:
     ```bash
     python src/main.py
     ```
