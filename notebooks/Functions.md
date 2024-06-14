@@ -146,6 +146,7 @@ def send_STAC_query(limit=20, collections=None, intersects=None, datetime=None, 
 
 ### Separate GEOJSON into Windows
 
+##### Function Overview: The create_windows function generates a list of geographical bounds for sub-windows that cover the entire AOI. These sub-windows can be used for more granular analysis and processing of geospatial data within the AOI.
 
 ```python
 def create_windows(aoi_gdf):
