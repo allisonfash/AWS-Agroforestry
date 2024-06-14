@@ -1,14 +1,35 @@
 ## NASA Agroforestry Project
 
-The NASA Agroforestry project takes place in various parts of the Brazilian and Peruvian forest. Recently, the project has aimed to focus mainly on the Peruvian side of the Amazon. The goal is to analyze deforestation rates over the years due to intensive agricultural practices. It has been observed on a continental level, and the data analysis process is being replicated onto Amazon Web Services.
+The NASA Agroforestry project takes place in various parts of the Brazilian and Peruvian forest. Recently, the project has aimed to focus mainly on the Peruvian side of the Amazon. The goal is to analyze deforestation rates over the years due to intensive agricultural practices. It has been observed on a continental level, and the data analysis process is being replicated onto Amazon Web Services. For the scope of this individual project I am specifically focusing on the Ucayali region of Peru which has unfortunately experienced these high rates of deforestation.  
 
-The landsatT package is a key aspect for facilitating time series as it measures surface reflection and “spectral indices” originally derived from the Landsat satellite.(Berner et al., 2023). This type of remote sensing analysis has been very important for determining how certain parts of the amazon forest have become developed or restored in the last few years. 
+### Methods
+
+The methods for the NASA SERVIR Agroforestry, Ucayali project involved several key steps, utilizing various computational resources and geospatial analysis tools to achieve the project’s objectives. 
+
+#### Computational Resources
+To handle the extensive data processing required for this project, I utilized Amazon Web Services (AWS). Specifically, I experimented with three different AWS instances to determine the most efficient setup:
+- **Medium Instance:** Initial tests were conducted using a medium instance. While it was sufficient for basic tasks, it lacked the necessary power for large-scale data processing.
+- **Large Instance:** The large instance provided more computational power, but it still struggled with the intensive processing tasks required for generating composite images.
+- **Extra Large Instance:** This instance offered the best performance, allowing for efficient processing of the large datasets involved in the project.
+
+#### Sagemaker Notebooks vs. Sagemaker Labs
+Through my experimentation, I discovered that **Sagemaker Notebooks** was a superior option compared to Sagemaker Labs for this project. Sagemaker Notebooks provided the necessary computational capabilities and flexibility to process the composite images effectively, which was a critical requirement for the project.
+
+#### Code Development and Environment Configuration
+- **Code Skeleton:** I started with a code skeleton provided for the project. This initial code served as a foundation, but required significant modifications to meet the specific needs of the NASA SERVIR Ucayali project.
+- **Environment Configuration:** Using a `.yml` file, I configured the environment to ensure all necessary libraries and dependencies were correctly installed. This configuration was difficult but crucial for the successful execution of the code and the production of the required images.
+
+#### Data Processing and Image Generation
+Once the environment was correctly configured, I executed the code to process the satellite imagery and generate composite images that broadcasted the greenest NDVI (Normalized Difference Vegetation Index) pixel. These images are integral to the project’s objectives, providing visual representations of environmental changes and helping to inform resource management and disaster preparedness strategies. 
+
+In summary, the methodology for this project involved a series of computational experiments to determine the optimal AWS instance, the utilization of Sagemaker Notebooks for effective data processing, and extensive code modifications and environment configurations to achieve the desired outcomes.
+
+
+#### Other Resources
+The landsat package is another key aspect for facilitating time series as it measures surface reflection and “spectral indices” originally derived from the Landsat satellite.(Berner et al., 2023). This type of remote sensing analysis has been very important for determining how certain parts of the amazon forest have become developed or restored in the last few years. 
 
  Currently, we want to start integrating Landsat more heavily into AWS as it has guaranteed open source levels and has better capabilities for importing and exporting data. After importing the data into AWS, we can make a sagemaker notebook in the US-West2 region. With that notebook, it wil produce some data visualizations or maps that can be easily interpreted. After creating a new environment using the notebook code that shows all the mechanics for reading landsat from AWS data lake. In a AWS data lake you are able to store structured and unstructured data, and as of 2021 AWS now has the capabilities of not only holding raster data points but can now hold vector tiles as well. (DeMuth et al., 2022). 
 
-
-## Overview 
-This notebook demonstrates the mechanics of reading Landsat data from the AWS data lake. The primary goal is to create a composite image and generate NDVI for the greenest pixel, aiming for an annual average. Through this project we learn to import Landsat data into AWS using Sagemaker notebook. An Amazon Web services account is necessary to create your instance that supports the Jupyter notebook required for this code. 
 
 To exercise this process, follow these steps:
 
