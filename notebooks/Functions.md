@@ -593,7 +593,7 @@ def process_window(spectral_arr, qa_arr):
     return np.array(out_comp)
 ```
 ### Run Composite Processing
-
+##### Function Overiew: Retrieve, process, and verify the spectral data within a specific geographical window in the AOI. 
 
 ```python
 (height, width), spectral_arr, qa_arr  = retrieve_spectral_data(filter_returns(query_returns), window, aoi_gdf)
@@ -607,7 +607,7 @@ out_arr.shape
 
 ### Save Raster
 
-##### Function overview: 
+##### Function overview: This code will generate and save a composite GeoTIFF file using the processed spectral data, ensuring the data is stored in an optimized format for further analysis and visualization.
 
 ```python
 def get_geometry(query_returns, window, aoi_gdf):
